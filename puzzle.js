@@ -2,6 +2,7 @@ const EMPTY_CELL = 0;
 
 var grid = [];
 var puzzle = {};
+var answers = []; // Array of answer squares
 
 var score = 0;
 var max_score = 0;
@@ -68,6 +69,8 @@ function make_puzzle(puzzle) {
 
 	make_table(grid);
 
+	max_score = answers.length;
+
 }
 
 function make_table(data) {
@@ -101,10 +104,16 @@ function make_cell(cell, data) {
 	const input = document.createElement('input');
 	input.classList.add("answer-input");
 	input.setAttribute("maxlength", 1);
+
+	var cell_data = {}; // Data about this cell
+	cell_data.answer = data.text;
+	cell_data.text = text;
+	cell_data.input = input;
+	cell_data.input_text = "";
+
 	input.oninput = (event) => {
-		if ( event.target.value.toUpperCase() == data.text ) {
-			text.style.display = "";
-			input.remove();
+		if ( event.target.value.toUpperCase() == cell_data.answer ) {
+			cell_data.input_text = event.target.value.toUpperCase();
 			add_score();
 		}
 	};
@@ -112,7 +121,7 @@ function make_cell(cell, data) {
 	cell.appendChild(text);
 	cell.appendChild(input);
 	if (data.number > 0) cell.appendChild(number);
-	max_score++; // Increment the max score for every answer square
+	answers.push(cell_data);
 
 }
 
@@ -120,8 +129,22 @@ function add_score() {
 	// Increments the score and checks if the puzzle is completed
 	score++;
 	if (score == max_score) {
+		check_answers();
 		console.log("You win.");
 	}
+
+}
+
+function check_answers() {
+	// Removes input on correct cells
+	for (var cell of answers) {
+		if ( cell.input_text == cell.answer ) { // Input and answer match
+			cell.text.style.display = ""; // Show text
+			cell.input.remove(); // Remove input
+		}
+
+	}
+
 }
 
 load_data("20221009072505.json", make_puzzle);
