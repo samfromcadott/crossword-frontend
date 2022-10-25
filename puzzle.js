@@ -3,6 +3,9 @@ const EMPTY_CELL = 0;
 var grid = [];
 var puzzle = {};
 
+var score = 0;
+var max_score = 0;
+
 function add_words_to_grid(words, dx, dy) {
 	// Adds words to the grid (duh). (dx, dy) is the direction the words are oriented
 	for (w in words) {
@@ -102,13 +105,23 @@ function make_cell(cell, data) {
 		if ( event.target.value.toUpperCase() == data.text ) {
 			text.style.display = "";
 			input.remove();
+			add_score();
 		}
 	};
 
 	cell.appendChild(text);
 	cell.appendChild(input);
 	if (data.number > 0) cell.appendChild(number);
+	max_score++; // Increment the max score for every answer square
 
+}
+
+function add_score() {
+	// Increments the score and checks if the puzzle is completed
+	score++;
+	if (score == max_score) {
+		console.log("You win.");
+	}
 }
 
 load_data("20221009072505.json", make_puzzle);
