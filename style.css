@@ -28,6 +28,7 @@ td.answer-square {
 	text-align: right;
 	padding: 0;
 	margin: 0;
+	user-select: none;
 }
 
 input.answer-input {
