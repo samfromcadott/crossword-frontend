@@ -1,5 +1,11 @@
+#puzzle {
+	width: 60%;
+	margin: auto;
+}
+
 table {
 	background-color: black;
+	margin: auto;
 }
 
 td {
@@ -41,4 +47,13 @@ input.answer-input {
 	text-align: center;
 	position: absolute;
 	top: 25%;
+}
+
+#win-message.hidden {
+	color: #00000000;
+	user-select: none;
+}
+
+#win-message.show {
+	color: #000000FF;
 }

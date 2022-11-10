@@ -128,10 +128,7 @@ function make_cell(cell, data) {
 function add_score() {
 	// Increments the score and checks if the puzzle is completed
 	score++;
-	if (score == max_score) {
-		check_answers();
-		console.log("You win.");
-	}
+	if (score == max_score) win_game();
 
 }
 
@@ -144,6 +141,16 @@ function check_answers() {
 		}
 
 	}
+
+}
+
+function win_game() {
+	const win_message = document.getElementById("win-message");
+
+	check_answers();
+
+	win_message.classList.remove("hidden");
+	win_message.classList.add("show");
 
 }
 
