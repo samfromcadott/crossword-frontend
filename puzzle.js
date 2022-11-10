@@ -1,11 +1,14 @@
 const EMPTY_CELL = 0;
 
+const check_button = document.getElementById("check-button");
+
 var grid = [];
 var puzzle = {};
 var answers = []; // Array of answer squares
 
 var score = 0;
 var max_score = 0;
+var checks_left = 5;
 
 function add_words_to_grid(words, dx, dy) {
 	// Adds words to the grid (duh). (dx, dy) is the direction the words are oriented
@@ -116,6 +119,9 @@ function make_cell(cell, data) {
 			cell_data.input_text = event.target.value.toUpperCase();
 			add_score();
 		}
+
+		if (check_button.disabled) check_button.disabled = false; // Enable the check button on first input
+
 	};
 
 	cell.appendChild(text);
@@ -141,6 +147,15 @@ function check_answers() {
 		}
 
 	}
+
+}
+
+function check_clicked() {
+	// Runs when the check button is clicked
+	checks_left -= 1;
+	if (checks_left == 0) check_button.disabled = true;
+
+	check_answers();
 
 }
 
